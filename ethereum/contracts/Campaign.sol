@@ -48,11 +48,11 @@ contract Campaign {
 
     function createRequest(string description, uint value, address recipient) public restricted {
         Request memory newRequest = Request({
-            description: description,
-            value: value,
-            recipient: recipient,
-            complete: false,
-            approvalCount: 0
+           description: description,
+           value: value,
+           recipient: recipient,
+           complete: false,
+           approvalCount: 0
         });
 
         requests.push(newRequest);
@@ -69,24 +69,24 @@ contract Campaign {
     }
 
     function finalizeRequest(uint index) public restricted {
-     Request storage request = requests[index];
+        Request storage request = requests[index];
 
-     require(request.approvalCount > (approversCount / 2));
-     require(!request.complete);
+        require(request.approvalCount > (approversCount / 2));
+        require(!request.complete);
 
-     request.recipient.transfer(request.value);
-     request.complete = true;
+        request.recipient.transfer(request.value);
+        request.complete = true;
     }
 
     function getSummary() public view returns (
       uint, uint, uint, uint, address
       ) {
-      return (
-        minimumContribution,
-        this.balance,
-        requests.length,
-        approversCount,
-        manager
+        return (
+          minimumContribution,
+          this.balance,
+          requests.length,
+          approversCount,
+          manager
         );
     }
 
